@@ -1,4 +1,4 @@
-ruby-sudoku-solver
-==================
+sudoku-solver
+=============
 
-Solves a sudoku puzzle when shown one.
+Solves a sudoku puzzle when supplied one.
