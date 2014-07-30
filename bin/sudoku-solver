@@ -1,0 +1,7 @@
+#!
+
+require 'optparse'
+
+opts_parser = OptionParser.new do |opt|
+  opts.banner = "Usage: sudoku_solver"
+end
