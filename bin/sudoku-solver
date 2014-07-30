@@ -1,7 +1,48 @@
-#!
+#!ruby
 
+# Require code
+# ============
+
+# #Application allows us to run the program using the set configuration from the command line.
+require_relative '../src/application'
+
+# OptionParser gem for parsing options
 require 'optparse'
 
-opts_parser = OptionParser.new do |opt|
-  opts.banner = "Usage: sudoku_solver"
+# Setup defaults
+# ==============
+
+# The default provider is used unless the --provider switch is used.
+DEFAULT_PROVIDER = FileProvider
+
+# Set up options
+# ==============
+
+# Set default provider
+provider = DEFAULT_PROVIDER
+
+# Parse command line options using #OptionParser
+OptionParser.new do |opts|
+  opts.banner = 'Usage: sudoku_solver'
+
+  opts.on('-p', '--provider', 'Sets the provider to be used for parsing and generating the solution.') do |provider_name|
+    provider = Provider.descendants.find { |clazz| clazz.provider_name == provider_name}
+  end
 end
+
+# Invoke #Application.run!
+# ========================
+
+# Run #Application.run! and retrieve the resulting #puzzle_state
+board_state = Application.run!(provider)
+
+# Report on the results
+# =====================
+
+if(board_state.complete?)
+  puts 'Could not finish puzzle. This is as far as we got...'
+else
+  puts 'Puts we made it! Sudoku achieved!'
+end
+
+puts board_state.board_array.to_s
