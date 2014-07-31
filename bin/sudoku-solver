@@ -14,6 +14,7 @@ require 'optparse'
 
 # Set default provider
 provider_type = Application::DEFAULT_PROVIDER
+solver_type = Application::DEFAULT_SOLVER
 
 # Parse command line options using #OptionParser
 opts = OptionParser.new do |opts|
@@ -21,6 +22,10 @@ opts = OptionParser.new do |opts|
 
   opts.on('-p', '--provider [NAME]', String, 'Sets the provider to be used for parsing and generating the solution.') do |provider_name|
     provider_type = Application.get_provider_type(provider_name)
+  end
+
+  opts.on('-s', '--solver [NAME]', String, 'Sets the solver to be used for searching for a sudoku configuration from the board given by the provider.') do |solver_name|
+    solver_type = Application.get_solver_type(solver_name)
   end
 end
 
@@ -42,7 +47,7 @@ end
 # ========================
 
 # Run #Application.run! and retrieve the resulting #board_state
-provider, board_state, result = Application.run!(provider_type)
+provider, board_state, result = Application.run!(provider_type, solver_type)
 
 # Report on the results
 # =====================
