@@ -52,10 +52,10 @@ provider, board_state, result = Application.run!(provider_type, solver_type)
 # Report on the results
 # =====================
 
-if(result.eql? false)
-  puts 'Could not finish board. This is as far as we got...'
-else
-  puts 'Puts we made it! Sudoku achieved!'
+if(!result) # If #result is false, we failed.
+  puts 'Could not find a sudoku configuration in the board.'
+else # If #result is true, we succeeded. Bam!
+  puts 'We made it! Sudoku achieved!'
 end
 
 puts board_state.to_s
