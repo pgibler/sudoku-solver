@@ -1,6 +1,6 @@
 # #BoardState is needed for generation.
 
-require_relative '../data/board_state'
+require_relative '../board/board_state'
 
 # #FileProvider will read in the command line options, find the file as the first argument (i.e. #ARGV[0]),
 # and then read through the sudoku boards 9x9 lines and generate a board.
