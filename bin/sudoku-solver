@@ -9,40 +9,48 @@ require_relative '../src/application'
 # OptionParser gem for parsing options
 require 'optparse'
 
-# Setup defaults
-# ==============
-
-# The default provider is used unless the --provider switch is used.
-DEFAULT_PROVIDER = FileProvider
-
 # Set up options
 # ==============
 
 # Set default provider
-provider = DEFAULT_PROVIDER
+provider_type = Application::DEFAULT_PROVIDER
 
 # Parse command line options using #OptionParser
-OptionParser.new do |opts|
-  opts.banner = 'Usage: sudoku_solver'
+opts = OptionParser.new do |opts|
+  opts.banner = 'Usage: sudoku-solver'
 
-  opts.on('-p', '--provider', 'Sets the provider to be used for parsing and generating the solution.') do |provider_name|
-    provider = Provider.descendants.find { |clazz| clazz.provider_name == provider_name}
+  opts.on('-p', '--provider [NAME]', String, 'Sets the provider to be used for parsing and generating the solution.') do |provider_name|
+    provider_type = Application.get_provider_type(provider_name)
   end
+end
+
+opts.on_tail("-h", "--help",
+             "Show this message") do
+  puts opts
+  exit
+end
+
+begin
+  opts.parse!(ARGV)
+rescue OptionParser::InvalidOption => e
+  puts e
+  puts opts
+  exit(1)
 end
 
 # Invoke #Application.run!
 # ========================
 
-# Run #Application.run! and retrieve the resulting #puzzle_state
-board_state = Application.run!(provider)
+# Run #Application.run! and retrieve the resulting #board_state
+provider, board_state, result = Application.run!(provider_type)
 
 # Report on the results
 # =====================
 
-if(board_state.complete?)
-  puts 'Could not finish puzzle. This is as far as we got...'
+if(result.eql? false)
+  puts 'Could not finish board. This is as far as we got...'
 else
   puts 'Puts we made it! Sudoku achieved!'
 end
 
-puts board_state.board_array.to_s
+puts board_state.to_s
