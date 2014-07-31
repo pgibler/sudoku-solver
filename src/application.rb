@@ -13,7 +13,8 @@ class Application
 
   # Runs the #Application by getting the #BoardState from the #Provider and then having #Solver.solve interact with it
   #
-  # @provider - The #Provider used to get the #BoardState
+  # @provider_type - The #Provider sub-type used to get the #BoardState.
+  # @solver_type - The #Solver sub-type used to search for a sudoku configuration in the #BoardState.
   def self.run!(provider_type, solver_type)
     solver_type.new.solve provider_type
   end
