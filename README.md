@@ -20,3 +20,13 @@ as so - `--solver backtracking`.
 You can add your own `Provider` implementations by forking and adding them to the project.
 Some ideas for a custom `Provider` include reading a Latin square off of an image, or reading in a Latin square
 from a socket connection.
+
+Example usage:
+
+- Implicitly uses `FileProvider` and `BacktrackingSolver`
+
+```bin/sudoku-solver board_examples/board_one.txt```
+
+- Explicitly uses `FileProvider` and `BacktrackingSolver`
+
+```bin/sudoku-solver -p file -s backtracking board_examples/board_one.txt```
