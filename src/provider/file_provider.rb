@@ -1,7 +1,7 @@
 require_relative '../board/board_state'
 
 ##
-# `FileProvider` will read in the command line options, find the file as the first argument (i.e. `ARGV[0]`),
+# FileProvider will read in the command line options, find the file as the first argument (i.e. `ARGV[0]`),
 # and then read through the sudoku boards 9x9 lines and generate a board.
 # Can read in two formats:
 # - spaced lines:
@@ -33,7 +33,7 @@ class FileProvider < Provider
   # Unassigned values equal 0 for the {FileProvider}
   UNASSIGNED_VALUE=0
 
-  # The {FileProvider::PROVIDER_NAME} of `FileProvider` is `'file'`.
+  # The {FileProvider::PROVIDER_NAME} of FileProvider.
   PROVIDER_NAME='file'
 
   # Provides a {BoardState} by reading through a file, line-by-line, removing all white text, and then converting the
@@ -65,18 +65,18 @@ class FileProvider < Provider
 
   # Determines to see if a cell contains 0 or not.
   #
-  # @value [Object] The value of the cell being checked.
+  # @param value [Object] The value of the cell being checked.
   #
-  # @return [Boolean] Returns `true` if the value equals an unassigned value, otherwise `false`.
+  # @return [Boolean] Returns true if the value equals an unassigned value, otherwise false.
   def is_value_unassigned?(value)
     value == UNASSIGNED_VALUE
   end
 
-  # Returns `true` if the `board_state` is filled. Otherwise, `false`.
+  # Returns true if the `board_state` is filled. Otherwise, false.
   #
-  # @board_state [BoardState] The `BoardState` whose filled status is being determined.
+  # @param board_state [BoardState] The `BoardState` whose filled status is being determined.
   #
-  # @return [Boolean] Returns `true` if the board is filled, otherwise `false`.
+  # @return [Boolean] Returns true if the board is filled, otherwise false.
   def filled?(board_state)
     board_state.each_cell do |column, row|
       return false if is_value_unassigned?( board_state.at(column, row) )
@@ -100,7 +100,7 @@ class FileProvider < Provider
   # or
   # - 4 0 0 5 2 0 1 0 3
   #
-  # @line [String] The line that is parsed into an array.
+  # @param line [String] The line that is parsed into an array.
   #
   # @return [String] Returns a `String` with the whitespace removed.
   def convert_line_to_array(line)

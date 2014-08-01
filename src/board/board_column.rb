@@ -1,21 +1,21 @@
 ##
-# `BoardColumn` contains a column of cells from a `BoardState`.
+# BoardColumn contains a column of cells from a {BoardState}.
 #
-# @see {BoardState}
+# @see BoardState
 class BoardColumn
 
-  # Constructor for `BoardColumn`.
+  # Constructor for BoardColumn.
   #
-  # @numbers [Array<Integer>] The numbers that appear in the column.
+  # @param numbers [Array<Integer>] The numbers that appear in the column.
   def initialize(numbers)
     @numbers = numbers
   end
 
-  # Returns `true` if the `number` is contained in the `BoardColumn`, otherwise `false`.
+  # Returns true if the number is contained in the BoardColumn, otherwise false.
   #
-  # @number [Integer] The number to search for in the `BoardColumn`.
+  # @param number [Integer] The number to search for in the BoardColumn.
   #
-  # @return [Boolean] Returns `true` if the `number` is contained in the `BoardColumn`, otherwise `false`.
+  # @return [Boolean] Returns true if the number is contained in the BoardColumn, otherwise false.
   def contains?(number)
     @numbers.include?(number)
   end

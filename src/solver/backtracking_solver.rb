@@ -1,22 +1,22 @@
 ##
-# `BacktrackingSolver` solves a Latin square into sudoku using the backtracking technique.
-# Technique ported from this {http://www.geeksforgeeks.org/backtracking-set-7-suduku/ URL}
+# BacktrackingSolver solves a Latin square into sudoku using the backtracking technique.
+# Technique ported from this {http://www.geeksforgeeks.org/backtracking-set-7-suduku/ URL}.
 class BacktrackingSolver < Solver
 
-  # The {BacktrackingSolver::SOLVER_NAME} of `BacktrackingSolver` is `'backtracking'`.
+  # The {BacktrackingSolver::SOLVER_NAME} of BacktrackingSolver.
   SOLVER_NAME='backtracking'
 
-  # Determines if a {BoardState} has a valid sudoku configuration and generates a {BoardState} containing that data.
-  # The {BoardState} is retrieved from the provider.
+  # Searches potential configurations of the {BoardState} supplied by the {Provider} to see if it contains a valid
+  # sudoku configuration.
   #
-  # @provider_type [Class] A {Provider} type that supplies a {BoardState}.
+  # @param provider_type [Class] A {Provider} type that supplies a {BoardState}.
   #
-  # @return [Provider, BoardState, Boolean] Returns a tuple of ({Provider}, {BoardState}, {Boolean}) indicating the {Provider} used to get the board and interact with it, the furthest {BoardState} achieved, and the success state of the operation.
+  # @return [(Provider, BoardState, Boolean)] Returns a triple of ({Provider}, {BoardState}, {Boolean}) indicating the {Provider} used to get the board and interact with it, the furthest {BoardState} achieved, and the success state of the operation.
   def solve(provider_type)
     @provider = provider_type.new
 
     # Solve the puzzle
-    board_state, result = solve(@provider.provide_board_state)
+    board_state, result = do_solve(@provider.provide_board_state)
 
     # The resulting {BoardState} and {Provider} will be returned.
     return @provider, board_state, result
@@ -26,10 +26,10 @@ class BacktrackingSolver < Solver
 
   # Solves sudoku. Returns the resulting {BoardState}.
   #
-  # @board_state [BoardState] The current board state to check.
+  # @param board_state [BoardState] The current board state to check.
   #
-  # @return [BoardState, Boolean] Returns a tuple of ({BoardState},{Boolean}) which includes the final state and success state of the operation.
-  def solve(board_state)
+  # @return [(BoardState, Boolean)] Returns a tuple of `({BoardState},Boolean)` which includes the final {BoardState} and success state of the operation.
+  def do_solve(board_state)
     # If there is no unassigned location, we are done
     if (@provider.filled? board_state)
       return board_state, true # The #board_state is complete. Done!
@@ -48,7 +48,7 @@ class BacktrackingSolver < Solver
 
         # Try and solve the next step. If this returns true,
         # the board_state is complete and we have succeeded.
-        result_board_state, operation_result = solve(updated_board_state)
+        result_board_state, operation_result = do_solve(updated_board_state)
 
         # If it succeeded, return the board_state.
         if (operation_result)
@@ -63,16 +63,16 @@ class BacktrackingSolver < Solver
     return board_state, false
   end
 
-  # Returns true if the `board_state` can be assigned the `num` value at `row` and #column.
+  # Returns true if the `board_state` can be assigned the number value at `column` and `row`.
   # This is possible if that number does not appear in that row, column, or 3x3 subsection
   # corresponding to that location.
   #
-  # @board_state [BoardState] The {BoardState} instance whose safety is being checked.
-  # @column [Integer] The column number to test for insertion safeness.
-  # @row [Integer] The row number to test for insertion safeness.
-  # @num [Integer] The number to insert into the board at (row, column).
+  # @param board_state [BoardState] The {BoardState} instance whose safety is being checked.
+  # @param column [Integer] The column number to test for insertion safeness.
+  # @param row [Integer] The row number to test for insertion safeness.
+  # @param number [Integer] The number to insert into the board at (column, row).
   #
-  # @return [Boolean] Returns `true` if it is safe to place a `number` at position `(column, row)`, otherwise `false`.
+  # @return [Boolean] Returns true if it is safe to place a number at position (column, row), otherwise false.
   def is_safe?(board_state, column, row, number)
     if( !board_state.row(row).contains?(number) && # If the row doesn't have the value...
         !board_state.column(column).contains?(number) && # ...and the column doesn't have the value...
@@ -83,11 +83,11 @@ class BacktrackingSolver < Solver
     end
   end
 
-  # Returns the next `(column, row)` pair that do not have a value assigned to them.
+  # Returns the next (column, row) pair that do not have a value assigned to them.
   #
-  # @board_state [BoardState] The board state to check
+  # @param board_state [BoardState] The board state to check
   #
-  # @return [Integer, Integer] Returns the `(column, row)` of the next unassigned location.
+  # @return [Integer, Integer] Returns the (column, row) of the next unassigned location.
   def find_next_unassigned_location(board_state)
     board_state.each_cell do |column, row|
       if @provider.is_value_unassigned?( board_state.at(column, row) )
