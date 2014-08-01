@@ -29,8 +29,4 @@ class Provider
   def assignable_values
   end
 
-  # Gets all descendants of the #Provider object.
-  def self.descendants
-    ObjectSpace.each_object(Class).select { |klass| klass < self }
-  end
 end

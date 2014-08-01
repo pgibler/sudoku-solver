@@ -1,5 +1,6 @@
 # #Application uses the #Solver to move the #BoardState as close to a solution as possible.
 
+require_relative 'stdlib/class'
 require_relative 'solver/solver'
 require_relative 'solver/backtracking_solver'
 require_relative 'provider/provider'

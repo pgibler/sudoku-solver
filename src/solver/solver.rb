@@ -14,9 +14,4 @@ class Solver
   def solve(provider_type)
   end
 
-  # Gets all descendants of the #Solver object.
-  def self.descendants
-    ObjectSpace.each_object(Class).select { |klass| klass < self }
-  end
-
 end
