@@ -1,88 +1,108 @@
-# The internal board types are needed, so we require them.
-
 require_relative 'board_row'
 require_relative 'board_column'
 require_relative 'board_zone'
 
-# #BoardState holds a particular state for a Latin square.
+# `BoardState` holds a configuration state for a Latin square.
+#
+# @see {BoardRow}
+# @see {BoardColumn}
+# @see {BoardZone}
 class BoardState
 
-  # Constructs a #BoardState.
-  # @board_array - A 9x9 array of integers for the Latin square. Top arrays stores columns, inner arrays store rows.
+  # Constructs a `BoardState`.
+  #
+  # @board_array [Array<Array<Integer>>] A 9x9 array of integers for the Latin square. Top arrays stores columns, inner arrays store rows.
   def initialize(board_array)
     @board_array = board_array
   end
 
-  # Returns the number at position (x,y)
-  # @x - The x-position to check at.
-  # @y - The y-position to check at.
-  def at(x, y)
-    @board_array[x][y]
+  # Returns the number at position `(column,row)`
+  #
+  # @column [Integer] The column to check at.
+  # @row [Integer] The row to check at.
+  def at(column, row)
+    @board_array[column][row]
   end
 
-  # Return the width of the board contained by #BoardState.
+  # Returns how many cells wide the board contained by `BoardState` is.
+  #
+  # @return [Integer] Returns how many cells wide the board contained by `BoardState` is.
   def width
     @board_array.length
   end
 
-  # Return the height of the board contained by #BoardState.
+  # Returns how many cells tall the board contained by `BoardState` is.
+  #
+  # @return [Integer] Returns how many cells tall the board contained by `BoardState` is.
   def height
     @board_array[0].length
   end
 
-  # Generates a new #BoardState by updating the cell at position (x,y) with the new value.
+  # Generates a new `BoardState` by updating the cell at position `(column, height)` with the new value.
   #
-  # @x - The x-position to update
-  # @y - The y-position to update
-  # @new_value - New value to assign to position (x,y)
-  def update(x, y, new_value)
+  # @column [Integer] The column to check at.
+  # @row [Integer] The row to check at.
+  # @new_value [Object] New value to assign to position `(column, height)`.
+  #
+  # @return [BoardState] Returns the updated `BoardState`.
+  def update(column, row, new_value)
     # Duplicate the 2D board array
     new_board_array = Marshal.load(Marshal.dump(@board_array))
 
-    # Assign the new value to the (x,y) position.
-    new_board_array[x][y] = new_value
+    # Assign the new value to the cell at `(column, height)`.
+    new_board_array[column][row] = new_value
 
-    # Return a new #BoardState with the updated array.
+    # Return a new `BoardState` with the updated array.
     BoardState.new(new_board_array)
   end
 
-  # Gets a #BoardRow that represents the row number requested.
+  # Returns the {BoardRow} that represents the row requested.
   #
-  # @number - The row number to get the #BoardRow from.
+  # @number [Integer] The row number to get the {BoardRow} from.
+  #
+  # @return [BoardRow] Returns the {BoardRow} that represents the row requested.
   def row(number)
     BoardRow.new(generate_row_array(number))
   end
 
-  # Gets a #BoardColumn that represents.
+  # Returns the {BoardColumn} that represents the column requested.
   #
-  # @number - The row number to get the #BoardColumn from.
+  # @number [Integer] The column number to get the {BoardColumn} from.
+  #
+  # @return [BoardColumn] Returns the {BoardColumn} that represents the column requested.
   def column(number)
     BoardColumn.new(@board_array[number])
   end
 
-  # Gets the #BoardZone, a 3x3 subsection of the #BoardState, around position (x,y).
+  # Gets the {BoardZone}, a 3x3 subsection of the `BoardState`, around position `(column, height)`.
   #
-  # @x - The x-position to find the #BoardState at.
-  # @y - The y-position to find the #BoardState at.
-  def zone_at(x, y)
-    BoardZone.new(generate_zone_array(x, y))
+  # @column [Integer] The column to check at.
+  # @row [Integer] The row to check at.
+  def zone_at(column, row)
+    BoardZone.new(generate_zone_array(column, row))
   end
 
-  # Returns an array of rows with columns at each index.
+  # Returns a multi-dimensional {Array} of rows with columns at each index.
+  #
+  # @return [Array<Array<Integer>>] Returns a multi-dimensional {Array} of rows with columns at each index.
   def to_row_array
     (0..height-1).map do |index|
       generate_row_array index
     end
   end
 
-  # Prints out the #BoardState.
+  # Returns the `BoardState` as represented by a {String}.
+  #
+  # @return [String] Returns the `BoardState` as represented by a {String}.
   def to_s
     to_row_array.map do |row|
       row.join(' ')
     end.join("\n")
   end
 
-  # Invokes a method on each cell in the #BoardState.
+  # Invokes a method on each cell in the `BoardState`.
+  #
+  # @block [Proc] The `block` to run on each cell.
   def each_cell(&block)
     (0..height-1).each do |row|
       (0..width-1).each do |column|
@@ -95,50 +115,55 @@ class BoardState
   # Generates a row array from a row number.
   # Iterates through each column and pulls out the item at the specified row number in the column.
   #
-  # @number - The row number to generate the #BoardRow from.
+  # @number [Integer] The row number to generate the {BoardRow} from.
+  #
+  # @return [Array<Integer>] Returns an {Array} containing {Integer} values from the specified row `number`.
   def generate_row_array(number)
     @board_array.map { |column| column[number] }
   end
 
-  # Generates a zone array from an (x,y) position.
-  # Copies out the zone array from the #BoardState.
+  # Generates a zone array from a `(column, row)` position.
+  # Copies out the zone array from the {BoardState}.
   #
-  # @x - The x-position that contains the desired zone.
-  # @y - The y-position that contains the desired zone.
-  def generate_zone_array(x, y)
-    start_x, end_x = get_zone_x_bounds(x)
-    start_y, end_y = get_zone_y_bounds(y)
+  # @column [Integer] The column to check at.
+  # @row [Integer] The row to check at.
+  #
+  # @return [Array<Array<Integer>>] Returns a 3x3 multi-dimensional {Array} containing the sub-section of the `BoardState`.
+  def generate_zone_array(column, row)
+    # Get the bounds for the {Array}
+    start_column, end_column = get_zone_column_bounds(column)
+    start_row, end_row = get_zone_row_bounds(row)
 
-    # Map out the array, and return it
-    (start_x..end_x).map do |x|
-      (start_y..end_y).map do |y|
-        @board_array[x][y]
+    # Map out the [Array] and return it.
+    (start_column..end_column).map do |column|
+      (start_row..end_row).map do |row|
+        @board_array[column][row]
       end
     end
   end
 
-  # Gets the zone x bounds
+  # Gets the zone column bounds
   #
-  # @x - The x of the zone where the bounds are being calculated.
-  def get_zone_x_bounds(x)
+  # @column [Integer] The column of the zone where the bounds are being calculated.
+  def get_zone_column_bounds(column)
     case
-      when x >= 6
+      when column >= 6
         return 6, 8
-      when x >= 3
+      when column >= 3
         return 3, 5
       else
         return 0, 2
     end
   end
 
-  # Gets the zone y bounds
+  # Gets the zone column bounds
   #
-  # @y - The y of the zone where the bounds are being calculated.
-  def get_zone_y_bounds(y)
+  # @row [Integer] The row of the zone where the bounds are being calculated.
+  def get_zone_column_bounds(column)
     case
-      when y >= 6
+      when column >= 6
         return 6, 8
-      when y >= 3
+      when column >= 3
         return 3, 5
       else
         return 0, 2

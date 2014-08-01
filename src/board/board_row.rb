@@ -1,16 +1,21 @@
-# #BoardRow contains a row of cells from a #BoardState.
+##
+# `BoardRow` contains a row of cells from a `BoardState`.
+#
+# @see {BoardState}
 class BoardRow
 
-  # Constructor for #BoardRow
+  # Constructor for `BoardRow`.
   #
-  # @numbers - The numbers that appear in the row.
+  # @numbers [Array<Integer>] The numbers that appear in the row.
   def initialize(numbers)
     @numbers = numbers
   end
 
-  # Returns #true or #false if the #number is contained in the #BoardRow.
+  # Returns `true` if the `number` is contained in the `BoardRow`, otherwise `false`.
   #
-  # @number - The number to check if it appears in the #BoardRow.
+  # @number [Integer] The number to search for in the `BoardRow`.
+  #
+  # @return [Boolean] Returns `true` if the `number` is contained in the `BoardRow`, otherwise `false`.
   def contains?(number)
     @numbers.include?(number)
   end

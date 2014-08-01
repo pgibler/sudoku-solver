@@ -6,7 +6,7 @@
 # #Application allows us to run the program using the set configuration from the command line.
 require_relative '../src/application'
 
-# OptionParser gem for parsing options
+# OptionParser gem for parsing options.
 require 'optparse'
 
 # Set up options
@@ -16,7 +16,7 @@ require 'optparse'
 provider_type = Application::DEFAULT_PROVIDER
 solver_type = Application::DEFAULT_SOLVER
 
-# Parse command line options using #OptionParser
+# Parse command line options using #OptionParser.
 opts = OptionParser.new do |opts|
   opts.banner = 'Usage: sudoku-solver'
 
@@ -46,7 +46,7 @@ end
 # Invoke #Application.run!
 # ========================
 
-# Run #Application.run! and retrieve the resulting #board_state
+# Run #Application.run! and retrieve the resulting #board_state.
 provider, board_state, result = Application.run!(provider_type, solver_type)
 
 # Report on the results
