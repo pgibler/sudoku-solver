@@ -1,4 +1,5 @@
-# #Application uses the #Solver to move the #BoardState as close to a solution as possible.
+# #Application uses a #Provider to retrieve a #BoardState and a #Solver to move the #BoardState as close to a solution
+# as possible.
 
 require_relative 'stdlib/class'
 require_relative 'solver/solver'
@@ -37,4 +38,5 @@ class Application
       clazz.solver_name == solver_name
     end
   end
+
 end
