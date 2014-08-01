@@ -16,7 +16,7 @@ class BoardState
     @board_array = board_array
   end
 
-  # Returns the number at position `(column,row)`
+  # Returns the number at position (column, row)
   #
   # @param column [Integer] The column to check at.
   # @param row [Integer] The row to check at.
@@ -52,7 +52,7 @@ class BoardState
     # Assign the new value to the cell at (column, height).
     new_board_array[column][row] = new_value
 
-    # Return a new `BoardState` with the updated array.
+    # Return a new BoardState with the updated array.
     BoardState.new(new_board_array)
   end
 
@@ -104,7 +104,7 @@ class BoardState
 
   # Invokes a method on each cell in the BoardState.
   #
-  # @param block [Proc] The `block` to run on each cell.
+  # @param block [Proc] The block to run on each cell.
   def each_cell(&block)
     (0..height-1).each do |row|
       (0..width-1).each do |column|
@@ -119,7 +119,7 @@ class BoardState
   #
   # @param number [Integer] The row number to generate the {BoardRow} from.
   #
-  # @return [Array<Integer>] Returns an `Array` containing {Integer} values from the specified row number.
+  # @return [Array<Integer>] Returns an Array containing Integer values from the specified row number.
   def generate_row_array(number)
     @board_array.map { |column| column[number] }
   end
@@ -132,11 +132,11 @@ class BoardState
   #
   # @return [Array<Array<Integer>>] Returns a 3x3 multi-dimensional Array containing the sub-section of the BoardState.
   def generate_zone_array(column, row)
-    # Get the bounds for the `Array`
+    # Get the bounds for the Array
     start_column, end_column = get_zone_column_bounds(column)
     start_row, end_row = get_zone_row_bounds(row)
 
-    # Map out the [Array] and return it.
+    # Map out the Array and return it.
     (start_column..end_column).map do |column|
       (start_row..end_row).map do |row|
         @board_array[column][row]
@@ -148,7 +148,7 @@ class BoardState
   #
   # @param column [Integer] The column of the zone where the bounds are being calculated.
   #
-  # @return [(Integer, Integer)] Returns a tuple of ({Integer], {Integer}) containing the column bounds.
+  # @return [(Integer, Integer)] Returns a tuple of (Integer, Integer) containing the column bounds.
   def get_zone_column_bounds(column)
     case
       when column >= 6
@@ -164,7 +164,7 @@ class BoardState
   #
   # @param row [Integer] The row of the zone where the bounds are being calculated.
   #
-  # @return [(Integer, Integer)] Returns a tuple of ({Integer], {Integer}) containing the row bounds.
+  # @return [(Integer, Integer)] Returns a tuple of (Integer, Integer) containing the row bounds.
   def get_zone_row_bounds(row)
     case
       when row >= 6

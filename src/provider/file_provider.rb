@@ -37,9 +37,9 @@ class FileProvider < Provider
   PROVIDER_NAME='file'
 
   # Provides a {BoardState} by reading through a file, line-by-line, removing all white text, and then converting the
-  # lines into an array.
+  # lines into an array. The first argument (ARGV[0]) is parsed as the filename.
   #
-  # @return [BoardState] The `BoardState`
+  # @return [BoardState] The BoardState as loaded from the file.
   def provide_board_state
     filename = ARGV[0]
 
@@ -72,11 +72,11 @@ class FileProvider < Provider
     value == UNASSIGNED_VALUE
   end
 
-  # Returns true if the `board_state` is filled. Otherwise, false.
+  # Returns true if the board_state is filled. Otherwise, false.
   #
-  # @param board_state [BoardState] The `BoardState` whose filled status is being determined.
+  # @param board_state [BoardState] The BoardState whose filled status is being determined.
   #
-  # @return [Boolean] Returns true if the board is filled, otherwise false.
+  # @return [Boolean] Returns true if the BoardState is filled, otherwise false.
   def filled?(board_state)
     board_state.each_cell do |column, row|
       return false if is_value_unassigned?( board_state.at(column, row) )
@@ -86,9 +86,9 @@ class FileProvider < Provider
     true
   end
 
-  # Returns an #Array containing the values that could be assigned to a cell.
+  # Returns an Array containing the values that could be assigned to a cell.
   #
-  # @return [Array<Integer>] Returns an `Array` containing the integers `(1..9)`.
+  # @return [Array<Integer>] Returns an Array containing the integers (1..9).
   def assignable_values
     (1..9)
   end
@@ -102,7 +102,7 @@ class FileProvider < Provider
   #
   # @param line [String] The line that is parsed into an array.
   #
-  # @return [String] Returns a `String` with the whitespace removed.
+  # @return [String] Returns a String with the whitespace removed.
   def convert_line_to_array(line)
     line.scan /\w/
   end
