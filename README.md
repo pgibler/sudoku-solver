@@ -23,8 +23,8 @@ Example usage:
 
 - Implicitly uses `FileProvider` and `BacktrackingSolver`
 
-```bin/sudoku-solver board_examples/board_one.txt```
+```sudoku-solver /path/to/boardfile```
 
 - Explicitly uses `FileProvider` and `BacktrackingSolver`
 
-```bin/sudoku-solver -p file -s backtracking board_examples/board_one.txt```
+```sudoku-solver -p file -s backtracking /path/to/boardfile```
