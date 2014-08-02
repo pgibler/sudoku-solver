@@ -9,11 +9,10 @@ class BacktrackingSolver < Solver
   # Searches potential configurations of the {BoardState} supplied by the {Provider} to see if it contains a valid
   # sudoku configuration.
   #
-  # @param provider_type [Class] A {Provider} type that supplies a {BoardState}.
+  # @param provider [Class] A {Provider} that supplies a {BoardState}.
   #
   # @return [(BoardState, Boolean)] Returns a tuple of ({BoardState}, {Boolean}) with the furthest {BoardState} achieved and the success state of the operation.
-  def solve(provider_type)
-    provider = provider_type.new
+  def solve(provider)
 
     # Solve the puzzle
     board_state, result = do_solve(provider.provide_board_state)
@@ -95,6 +94,7 @@ class BacktrackingSolver < Solver
       end
     end
 
+    # If this is called, there is an error with the board_state claiming it's filled when it is not.
     raise 'Board is complete, no empty locations could be found.'
   end
 end
