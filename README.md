@@ -23,7 +23,9 @@ from a socket connection.
 
 ##Solvers
 
-As well, you can set the `Solver` in a similar fashion. By default `Solver` is set to `BacktrackingSolver`.
+A `Solver` is a class that implements a strategy for finding a sudoku configuration for a `BoardState`.
+
+You can choose the `Solver` you would like to use in a similar fashion to `Provider`. By default `Solver` is set to `BacktrackingSolver`.
 Like a `Provider`, you can manually choose a different `Solver` by using the `--solver` switch and setting it to whatever value the `SOLVER_NAME` constant for that `Solver` is set to.
 
 The switch to utilize the `BacktrackingSolver` would thus be as follows - `--solver backtracking`.
