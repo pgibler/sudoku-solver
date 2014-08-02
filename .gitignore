@@ -1,2 +1,6 @@
+# Hide RubyMine files.
 .idea
+
+# Hide YARD files.
 .yardoc
+doc
