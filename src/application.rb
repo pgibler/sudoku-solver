@@ -5,33 +5,26 @@ require_relative 'provider/provider'
 require_relative 'provider/file_provider'
 
 ##
-# {Application} is the engine of the sudoku solver.
-# It uses a {Provider} to retrieve a {BoardState} and a {Solver} to configure the {BoardState} as close to a solution
-# as possible. If the solution is found from the {Application.run!} method, a triple of
-# ({Provider}, {BoardState}, Boolean)
-# It declares a {Application::DEFAULT_PROVIDER} and {Application::DEFAULT_SOLVER}, both of which can be configured
-# separately when the {Application.run!} function is invoked.
+# {Application} is the entry point of the sudoku solver portion of the program.
 #
 # @see Application.run!
 class Application
 
-  # Constants
-
-  # The default {Provider} is {FileProvider}
-  DEFAULT_PROVIDER=FileProvider
-
-  # The default {Solver} is {BacktrackingSolver}.
-  DEFAULT_SOLVER=BacktrackingSolver
-
-  # Runs the {Application} by getting the {BoardState} from the {Provider} and then having {Solver#solve} interact with it
+  # Runs the {Application} by getting the {BoardState} from the {Provider} and then having {Solver#solve} utilize it.
   #
-  # @param provider_type [Class] The {Provider} sub-type used to get the {BoardState}.
-  # @param solver_type [Class] The {Solver} sub-type used to search for a sudoku configuration in the {BoardState}.
+  # @param provider [Class] The {Provider} which provides the {BoardState}.
+  # @param solver [Class] The {Solver} which searches for a sudoku configuration in the {BoardState}.
   #
-  # @return [(Provider, BoardState, Boolean)] Returns a triple of ({Provider}, {BoardState}, Boolean) containing the {Provider} used to get the {BoardState} and a Boolean to indicate if the run was successful (true) or not (false).
-  def self.run!(provider_type, solver_type)
-    solver_type.new.solve provider_type
+  # @return [(BoardState, Boolean)] Returns a tuple of ({BoardState}, Boolean) containing the {Provider} used to get the {BoardState} and a Boolean to indicate if the run was successful (true) or not (false).
+  def self.run!(options={})
+
+    provider = get_provider_type(options[:provider_name]).new
+    solver = get_solver_type(options[:solver_name]).new
+
+    solver.solve provider
   end
+
+  private
 
   # Returns a {Provider} sub-type based on name, if available.
   #

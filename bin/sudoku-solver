@@ -12,20 +12,20 @@ require 'optparse'
 # Set up options
 # ==============
 
-# Set default provider
-provider_type = Application::DEFAULT_PROVIDER
-solver_type = Application::DEFAULT_SOLVER
+# Set default options
+provider_name = FileProvider::PROVIDER_NAME
+solver_name = BacktrackingSolver::SOLVER_NAME
 
 # Parse command line options using OptionParser.
 opts = OptionParser.new do |opts|
   opts.banner = 'Usage: sudoku-solver'
 
-  opts.on('-p', '--provider [NAME]', String, 'Sets the provider to be used for parsing and generating the solution.') do |provider_name|
-    provider_type = Application.get_provider_type(provider_name)
+  opts.on('-p', '--provider [NAME]', String, 'Sets the provider to be used for parsing and generating the solution.') do |name|
+    provider_name = name
   end
 
-  opts.on('-s', '--solver [NAME]', String, 'Sets the solver to be used for searching for a sudoku configuration from the board given by the provider.') do |solver_name|
-    solver_type = Application.get_solver_type(solver_name)
+  opts.on('-s', '--solver [NAME]', String, 'Sets the solver to be used for searching for a sudoku configuration from the board given by the provider.') do |name|
+    solver_name = name
   end
 end
 
@@ -47,7 +47,10 @@ end
 # =======================
 
 # Run Application.run! and retrieve the resulting board_state.
-board_state, result = Application.run!(provider_type, solver_type)
+board_state, result = Application.run!(
+    provider_name: provider_name,
+    solver_name: solver_name
+)
 
 # Report on the results
 # =====================
