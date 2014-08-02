@@ -1,7 +1,7 @@
 require_relative '../board/board_state'
 
 ##
-# FileProvider will read in the command line options, find the file as the first argument (i.e. `ARGV[0]`),
+# FileProvider will read in the command line options, find the file as the first argument (i.e. ARGV[0]),
 # and then read through the sudoku boards 9x9 lines and generate a board.
 # Can read in two formats:
 # - spaced lines:
