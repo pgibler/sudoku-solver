@@ -19,7 +19,7 @@ You can add your own `Provider` implementations by forking and adding them to th
 Some ideas for a custom `Provider` include reading a Latin square off of an image, or reading in a Latin square
 from a socket connection.
 
-Example usage:
+##Example usage
 
 - Implicitly uses `FileProvider` and `BacktrackingSolver`
 
@@ -28,3 +28,13 @@ Example usage:
 - Explicitly uses `FileProvider` and `BacktrackingSolver`
 
 ```./sudoku-solver -p file -s backtracking /path/to/boardfile```
+
+##Documentation generation
+
+To generate documentation, run the following commands.
+
+```
+gem install yard
+cd /path/to/sudoku-solver
+yardoc src
+```
