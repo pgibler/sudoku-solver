@@ -55,10 +55,10 @@ board_state, result = Application.run!(
 # Report on the results
 # =====================
 
-if(!result) # If result is false, we failed.
-  puts 'Could not find a sudoku configuration in the board.'
-else # If 1result is true, we succeeded. Bam!
+if(result) # If 1result is true, we succeeded. Bam!
   puts 'We made it! Sudoku achieved!'
+else # If result is false, we failed.
+  puts 'Could not find a sudoku configuration in the board.'
 end
 
 puts board_state.to_s
