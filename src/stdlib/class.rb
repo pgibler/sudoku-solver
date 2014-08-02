@@ -2,7 +2,7 @@
 # Add to the base Ruby {Class}
 class Class
 
-  # Goes through each sub-type deriving from {Class} and returns them as an `Array`.
+  # Goes through each sub-type deriving from {Class} and returns them as an Array.
   #
   # @return [Array] Returns the descendant sub-types of the {Class}.
   def descendants
