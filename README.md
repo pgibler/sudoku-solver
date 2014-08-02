@@ -23,7 +23,7 @@ from a socket connection.
 
 ##Solvers
 
-A `Solver` is a class that implements a strategy for finding a sudoku configuration for a `BoardState`.
+A `Solver` is a class that implements a strategy for finding `BoardState` with a sudoku configuration from a given `BoardState`.
 
 You can choose the `Solver` you would like to use in a similar fashion to `Provider`. By default `Solver` is set to `BacktrackingSolver`.
 Like a `Provider`, you can manually choose a different `Solver` by using the `--solver` switch and setting it to whatever value the `SOLVER_NAME` constant for that `Solver` is set to.
