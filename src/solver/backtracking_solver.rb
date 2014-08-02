@@ -11,15 +11,15 @@ class BacktrackingSolver < Solver
   #
   # @param provider_type [Class] A {Provider} type that supplies a {BoardState}.
   #
-  # @return [(Provider, BoardState, Boolean)] Returns a triple of ({Provider}, {BoardState}, {Boolean}) indicating the {Provider} used to get the board and interact with it, the furthest {BoardState} achieved, and the success state of the operation.
+  # @return [(BoardState, Boolean)] Returns a tuple of ({BoardState}, {Boolean}) with the furthest {BoardState} achieved and the success state of the operation.
   def solve(provider_type)
-    @provider = provider_type.new
+    provider = provider_type.new
 
     # Solve the puzzle
-    board_state, result = do_solve(@provider.provide_board_state)
+    board_state, result = do_solve(provider.provide_board_state)
 
     # The resulting {BoardState} and {Provider} will be returned.
-    return @provider, board_state, result
+    return board_state, result
   end
 
   private
@@ -28,17 +28,17 @@ class BacktrackingSolver < Solver
   #
   # @param board_state [BoardState] The current board state to check.
   #
-  # @return [(BoardState, Boolean)] Returns a tuple of `({BoardState},Boolean)` which includes the final {BoardState} and success state of the operation.
+  # @return [(BoardState, Boolean)] Returns a tuple of ({BoardState},Boolean) which includes the final {BoardState} and success state of the operation.
   def do_solve(board_state)
     # If there is no unassigned location, we are done
-    if (@provider.filled? board_state)
-      return board_state, true # The #board_state is complete. Done!
+    if (board_state.filled?)
+      return board_state, true # The BoardState is complete. Done!
     end
 
     column, row = find_next_unassigned_location(board_state)
 
     # Iterate through assignable values.
-    @provider.assignable_values.each do |num|
+    board_state.assignable_values.each do |num|
 
       # If num is not present at the unassigned row and column...
       if (is_safe?(board_state, column, row, num))
@@ -90,7 +90,7 @@ class BacktrackingSolver < Solver
   # @return [Integer, Integer] Returns the (column, row) of the next unassigned location.
   def find_next_unassigned_location(board_state)
     board_state.each_cell do |column, row|
-      if @provider.is_value_unassigned?( board_state.at(column, row) )
+      if board_state.is_value_unassigned?( board_state.at(column, row) )
         return column, row
       end
     end

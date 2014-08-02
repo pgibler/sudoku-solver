@@ -9,6 +9,11 @@ require_relative 'board_zone'
 # @see BoardZone
 class BoardState
 
+  # Constants
+
+  # Unassigned values equal 0 for the {FileProvider}
+  UNASSIGNED_VALUE=0
+
   # Constructs a BoardState.
   #
   # @param board_array [Array<Array<Integer>>] A 9x9 array of integers for the Latin square. Top arrays stores columns, inner arrays store rows.
@@ -111,6 +116,34 @@ class BoardState
         block.call(column, row)
       end
     end
+  end
+
+  # Determines to see if a cell contains 0 or not.
+  #
+  # @param value [Object] The value of the cell being checked.
+  #
+  # @return [Boolean] Returns true if the value equals an unassigned value, otherwise false.
+  def is_value_unassigned?(value)
+    value == UNASSIGNED_VALUE
+  end
+
+  # Returns true if the BoardState is filled, otherwise, false.
+  #
+  # @return [Boolean] Returns true if the BoardState is filled, otherwise false.
+  def filled?
+    each_cell do |column, row|
+      return false if is_value_unassigned? at(column, row)
+    end
+
+    # If there are no more 0 numbers, return #true.
+    true
+  end
+
+  # Returns an Array containing the values that could be assigned to a cell.
+  #
+  # @return [Array<Integer>] Returns an Array containing the integers (1..9).
+  def assignable_values
+    (1..9)
   end
 
   private

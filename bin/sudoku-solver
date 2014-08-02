@@ -47,7 +47,7 @@ end
 # =======================
 
 # Run Application.run! and retrieve the resulting board_state.
-provider, board_state, result = Application.run!(provider_type, solver_type)
+board_state, result = Application.run!(provider_type, solver_type)
 
 # Report on the results
 # =====================

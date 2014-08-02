@@ -30,9 +30,6 @@ class FileProvider < Provider
 
   # Constants
 
-  # Unassigned values equal 0 for the {FileProvider}
-  UNASSIGNED_VALUE=0
-
   # The {FileProvider::PROVIDER_NAME} of FileProvider.
   PROVIDER_NAME='file'
 
@@ -61,36 +58,6 @@ class FileProvider < Provider
     end
 
     BoardState.new(board_array)
-  end
-
-  # Determines to see if a cell contains 0 or not.
-  #
-  # @param value [Object] The value of the cell being checked.
-  #
-  # @return [Boolean] Returns true if the value equals an unassigned value, otherwise false.
-  def is_value_unassigned?(value)
-    value == UNASSIGNED_VALUE
-  end
-
-  # Returns true if the board_state is filled. Otherwise, false.
-  #
-  # @param board_state [BoardState] The BoardState whose filled status is being determined.
-  #
-  # @return [Boolean] Returns true if the BoardState is filled, otherwise false.
-  def filled?(board_state)
-    board_state.each_cell do |column, row|
-      return false if is_value_unassigned?( board_state.at(column, row) )
-    end
-
-    # If there are no more 0 numbers, return #true.
-    true
-  end
-
-  # Returns an Array containing the values that could be assigned to a cell.
-  #
-  # @return [Array<Integer>] Returns an Array containing the integers (1..9).
-  def assignable_values
-    (1..9)
   end
 
   private
