@@ -17,7 +17,7 @@ class BacktrackingSolver < Solver
     # Solve the puzzle
     board_state, result = do_solve(provider.provide_board_state)
 
-    # The resulting {BoardState} and {Provider} will be returned.
+    # The resulting BoardState and a Boolean indicating if the operation succeeded will be returned.
     return board_state, result
   end
 
