@@ -8,7 +8,7 @@ Solves a sudoku puzzle when supplied one.
         -s, --solver [NAME]              Sets the solver to be used for searching for a sudoku configuration from the board given by the provider.
         -h, --help                       Show this message
 
-##Providers
+## Providers
 
 A `Provider` is a class that implements a strategy to generate a `BoardState`.  
 
@@ -21,7 +21,7 @@ You can add your own `Provider` implementations by forking and adding them to th
 Some ideas for a custom `Provider` include reading a Latin square off of an image, or reading in a Latin square
 from a socket connection.
 
-##Solvers
+## Solvers
 
 A `Solver` is a class that implements a strategy for finding `BoardState` with a sudoku configuration from a given `BoardState`.
 
@@ -33,7 +33,7 @@ The switch to utilize the `BacktrackingSolver` would thus be as follows - `--sol
 You can add your own `Solver` implementations by forking and adding them to the project.
 Some ideas for a custom `Solver` include implementing a [stochastic search algorithm](http://en.wikipedia.org/wiki/Sudoku_solving_algorithms#Stochastic_search_.2F_optimization_methods) or a [brute force algorithm](http://en.wikipedia.org/wiki/Sudoku_solving_algorithms#Brute-force_algorithm).
 
-##Example usage
+## Example usage
 
 - Implicitly uses `FileProvider` and `BacktrackingSolver`
 
@@ -43,7 +43,7 @@ Some ideas for a custom `Solver` include implementing a [stochastic search algor
 
 ```./sudoku-solver -p file -s backtracking /path/to/boardfile```
 
-##Documentation generation
+## Documentation generation
 
 To generate documentation, run the following commands.
 
